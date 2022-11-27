@@ -1,0 +1,34 @@
+install.packages("mice")
+library (mice)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+ACCIDENT <- read.table("/Users/zhangyu/Desktop/数据分析应用-R语言作业2/data-assignment/ACCIDENT.csv",header = TRUE,sep = ",")
+PERSON <- read.table("/Users/zhangyu/Desktop/数据分析应用-R语言作业2/data-assignment/PERSON.csv",header = TRUE,sep = ",")
+VEHICLE <- read.table("/Users/zhangyu/Desktop/数据分析应用-R语言作业2/data-assignment/VEHICLE.csv",header = TRUE,sep = ",")
+# 第一小问
+acc_per <- 
+  inner_join(
+    x=ACCIDENT,
+    y=PERSON,
+  )
+
+# 第二小问
+INJ_SEV <- PERSON|>
+  group_by(INJ_SEV)|>
+  summarise(observation = n())|>
+  ungroup()
+INJ_SEV
+
+# 第三小问
+# 安装mice包：install.packages("mice")
+library(mice)
+acc_veh_left <- left_join(
+  x=ACCIDENT,
+  y=VEHICLE,
+  by=c("CASENUM","PSU")
+)|>
+  distinct()
+md.pattern(acc_veh_left)
+
+
